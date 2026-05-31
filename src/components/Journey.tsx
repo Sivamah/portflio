@@ -10,60 +10,60 @@ const milestones = [
     natureIcon: "🌱",
     techIcon: "🎓",
     natureLabel: "Seed",
-    title: "Started B.E Computer Science Engineering",
-    description: "Joined Dr. N.G.P Institute of Technology. Planted the seed of a Computer Science journey.",
-    color: "var(--c-primary)",
-    border: "rgba(110,139,96,0.2)",
-    darkBorder: "rgba(0,229,255,0.2)",
-    darkColor: "var(--c-primary)",
+    qrLabel: "INITIATION",
+    title: "Started CSE Journey",
+    techTitle: "CSE JOURNEY INITIALIZED",
+    description: "Joined Dr. N.G.P Institute of Technology. Began Computer Science Engineering program.",
+    color: "#3B82F6",
+    natureColor: "var(--c-primary)",
   },
   {
     year: "2023",
     natureIcon: "🌿",
     techIcon: "💻",
     natureLabel: "Sapling",
-    title: "Core Tech Stack — Java, Python, SQL",
-    description: "Grew strong programming fundamentals. Learned Java, Python, SQL and explored web technologies.",
-    color: "var(--c-teal)",
-    border: "rgba(122,175,142,0.2)",
-    darkBorder: "rgba(0,191,165,0.2)",
-    darkColor: "var(--c-accent)",
+    qrLabel: "CORE MODULES",
+    title: "Learned Java & Python",
+    techTitle: "CORE STACK ACQUIRED",
+    description: "Mastered Java, Python, and SQL. Built strong programming fundamentals and data structure skills.",
+    color: "#8B5CF6",
+    natureColor: "var(--c-teal)",
   },
   {
     year: "2024",
     natureIcon: "🌳",
-    techIcon: "🤖",
+    techIcon: "🚀",
     natureLabel: "Growing Tree",
-    title: "Real-World Projects & Cloud Exploration",
-    description: "Branched into real-world projects. Built AI-driven applications and explored cloud technologies.",
-    color: "var(--c-secondary)",
-    border: "rgba(166,124,82,0.2)",
-    darkBorder: "rgba(138,43,226,0.2)",
-    darkColor: "var(--c-secondary)",
+    qrLabel: "DEPLOYMENT",
+    title: "Built Real Projects",
+    techTitle: "PROJECTS DEPLOYED",
+    description: "Deployed real-world applications. Built AI-driven chess assistant and full-stack web platforms.",
+    color: "#00E5FF",
+    natureColor: "var(--c-secondary)",
   },
   {
     year: "2025",
     natureIcon: "🍃",
     techIcon: "☁️",
     natureLabel: "Expansion",
-    title: "AWS Cloud Internship",
-    description: "Expanded into cloud computing. AWS Cloud Internship at App Innovation Technologies.",
-    color: "var(--c-orange)",
-    border: "rgba(200,131,74,0.2)",
-    darkBorder: "rgba(255,140,66,0.2)",
-    darkColor: "var(--c-orange)",
+    qrLabel: "CLOUD OPS",
+    title: "AWS Internship",
+    techTitle: "AWS CLOUD OPERATIONS",
+    description: "AWS Cloud Internship at App Innovation Technologies. Cloud architecture and deployment expertise.",
+    color: "#F59E0B",
+    natureColor: "var(--c-orange)",
   },
   {
-    year: "Future",
+    year: "FUTURE",
     natureIcon: "🚀",
-    techIcon: "🚀",
+    techIcon: "⚡",
     natureLabel: "Full Bloom",
-    title: "Software Engineer & Cloud Engineer",
-    description: "Reaching full bloom — beginning my professional career building scalable cloud-native architectures and innovative software solutions.",
-    color: "var(--c-primary)",
-    border: "rgba(110,139,96,0.2)",
-    darkBorder: "rgba(0,229,255,0.2)",
-    darkColor: "var(--c-primary)",
+    qrLabel: "MISSION TARGET",
+    title: "Software & Cloud Engineer",
+    techTitle: "TARGET: SOFTWARE + CLOUD ENGINEER",
+    description: "Mission target — Software Engineer and Cloud Engineer building impactful, scalable solutions.",
+    color: "#22C55E",
+    natureColor: "var(--c-primary)",
   },
 ];
 
@@ -74,11 +74,12 @@ export default function Journey() {
   const isNature = theme === "nature";
 
   return (
-    <section
-      id="journey"
-      className="section-alt"
-      style={{ background: "var(--c-surface-2)" }}
-    >
+    <section id="journey" style={{ background: isNature ? "var(--c-surface-2)" : "#0A0F1E", position: "relative" }}>
+      {/* QR grid background */}
+      {!isNature && (
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(59,130,246,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.025) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
+      )}
+
       <div ref={ref} className="section" style={{ position: "relative" }}>
 
         {/* Header */}
@@ -90,45 +91,34 @@ export default function Journey() {
         >
           <div className="section-label">
             <span>{isNature ? "🌱" : "📍"}</span>
-            My Journey
+            {isNature ? "My Journey" : "NAVIGATION LOG"}
           </div>
           <h2 className="text-section-title font-display">
             {isNature ? (
               <>The <span className="gradient-text">Growth</span> Story</>
             ) : (
-              <>The Road <span className="gradient-text">So Far</span></>
+              <span className="gradient-text glow-text">THE ROUTE</span>
             )}
           </h2>
-          <p style={{ color: "var(--c-text-2)", marginTop: 12, maxWidth: 480, fontFamily: isNature ? "Lora, serif" : "Inter, sans-serif", fontStyle: isNature ? "italic" : "normal" }}>
+          <p style={{ color: "var(--c-text-2)", marginTop: 10, maxWidth: 480, fontFamily: isNature ? "Lora, serif" : "Space Grotesk, sans-serif", fontStyle: isNature ? "italic" : "normal", fontSize: "0.88rem", letterSpacing: isNature ? "0" : "0.03em" }}>
             {isNature
               ? "Every great engineer grows from a seed. Here's my growth story — rooted in curiosity, branching into technology."
-              : "Every great engineer has a story. Here's mine — a roadmap of growth, learning, and relentless curiosity."}
+              : "MISSION TIMELINE // Charting the strategic milestones of a software engineering career in progress."}
           </p>
         </motion.div>
 
         {/* Vertical Timeline */}
-        <div style={{ position: "relative", paddingLeft: "44px" }}>
-
-          {/* Vertical line */}
+        <div style={{ position: "relative", paddingLeft: "52px" }}>
+          {/* Neon route line */}
           <motion.div
             initial={{ height: 0 }}
             animate={inView ? { height: "100%" } : {}}
-            transition={{ duration: 1.8, ease: "easeInOut" }}
-            style={{
-              position: "absolute",
-              left: "15px",
-              top: 0,
-              width: "2px",
-              background: isNature
-                ? "linear-gradient(to bottom, #6E8B60, #A67C52, #B7C9A8)"
-                : "linear-gradient(to bottom, #00E5FF, #8A2BE2, #00BFA5)",
-              opacity: 0.4,
-              zIndex: 0,
-              borderRadius: 99,
-            }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            className="neon-route-line"
+            style={{ height: "100%" }}
           />
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "52px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
             {milestones.map((m, i) => (
               <motion.div
                 key={m.year}
@@ -140,21 +130,21 @@ export default function Journey() {
                 {/* Checkpoint node */}
                 <div style={{
                   position: "absolute",
-                  left: "-44px",
-                  top: "26px",
+                  left: "-52px",
+                  top: "24px",
                   transform: "translateY(-50%)",
-                  width: "32px",
-                  height: "32px",
+                  width: isNature ? "30px" : "32px",
+                  height: isNature ? "30px" : "32px",
                   borderRadius: "50%",
-                  background: "var(--c-surface)",
-                  border: `2px solid ${isNature ? m.color : m.darkColor}`,
+                  background: isNature ? "var(--c-surface)" : "#0A0F1E",
+                  border: `2px solid ${m.color}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "0.95rem",
+                  fontSize: "0.9rem",
                   boxShadow: isNature
-                    ? `0 0 12px ${m.border.replace("0.2", "0.3")}`
-                    : `0 0 18px ${m.darkBorder.replace("0.2", "0.5")}`,
+                    ? `0 0 8px ${m.color}30`
+                    : `0 0 20px ${m.color}60, 0 0 40px ${m.color}20`,
                   zIndex: 1,
                 }}>
                   {isNature ? m.natureIcon : m.techIcon}
@@ -162,57 +152,67 @@ export default function Journey() {
 
                 {/* Card */}
                 <motion.div
-                  whileHover={{ x: 8 }}
+                  whileHover={{ x: isNature ? 8 : 4, borderColor: m.color }}
                   transition={{ type: "spring", stiffness: 300, damping: 24 }}
                   style={{
-                    background: "var(--c-surface)",
-                    border: `1px solid ${isNature ? m.border : m.darkBorder}`,
-                    borderRadius: isNature ? "20px" : "16px",
-                    padding: "24px 28px",
-                    boxShadow: "var(--shadow-card)",
+                    background: isNature ? "var(--c-surface)" : "#0F172A",
+                    border: `1px solid ${isNature ? "var(--c-border)" : "rgba(255,255,255,0.07)"}`,
+                    borderRadius: isNature ? "20px" : "12px",
+                    padding: "22px 26px",
+                    boxShadow: isNature ? "var(--shadow-card)" : "var(--shadow-card)",
+                    position: "relative",
+                    overflow: "hidden",
                   }}
                 >
+                  {/* QR accent line top */}
+                  {!isNature && (
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${m.color}, transparent)` }} />
+                  )}
+
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
-                    <div>
-                      {/* Year + nature label */}
+                    <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                         <span style={{
-                          color: isNature ? m.color : m.darkColor,
-                          fontSize: "0.85rem",
+                          color: m.color,
+                          fontSize: isNature ? "0.85rem" : "0.72rem",
                           fontWeight: 700,
-                          letterSpacing: "0.04em",
+                          fontFamily: isNature ? "Sora, sans-serif" : "Orbitron, monospace",
+                          letterSpacing: isNature ? "0.04em" : "0.15em",
                         }}>
                           {m.year}
                         </span>
-                        {isNature && (
-                          <span style={{
-                            fontSize: "0.72rem",
-                            fontWeight: 600,
-                            color: "var(--c-text-3)",
-                            background: "var(--c-surface-2)",
-                            padding: "2px 10px",
-                            borderRadius: 99,
-                            border: "1px solid var(--c-border)",
-                          }}>
-                            {m.natureLabel}
-                          </span>
-                        )}
+                        <span style={{
+                          fontSize: "0.65rem",
+                          fontWeight: 700,
+                          color: isNature ? "var(--c-text-3)" : "var(--c-text-3)",
+                          background: isNature ? "var(--c-surface-2)" : "rgba(255,255,255,0.05)",
+                          padding: "2px 8px",
+                          borderRadius: isNature ? 99 : 4,
+                          border: `1px solid ${isNature ? "var(--c-border)" : "rgba(255,255,255,0.06)"}`,
+                          fontFamily: isNature ? "Inter" : "Space Grotesk, sans-serif",
+                          letterSpacing: isNature ? "0" : "0.08em",
+                          textTransform: isNature ? "none" : "uppercase",
+                        }}>
+                          {isNature ? m.natureLabel : m.qrLabel}
+                        </span>
                       </div>
                       <h3 style={{
-                        fontSize: "1rem",
+                        fontSize: isNature ? "1rem" : "0.88rem",
                         fontWeight: 700,
                         color: "var(--c-text-1)",
-                        fontFamily: "Sora, sans-serif",
+                        fontFamily: isNature ? "Sora, sans-serif" : "Space Grotesk, sans-serif",
+                        letterSpacing: isNature ? "0" : "0.05em",
+                        textTransform: isNature ? "none" : "uppercase",
                         marginBottom: 8,
                         lineHeight: 1.35,
                       }}>
-                        {m.title}
+                        {isNature ? m.title : m.techTitle}
                       </h3>
                       <p style={{
-                        fontSize: "0.85rem",
+                        fontSize: "0.84rem",
                         color: "var(--c-text-2)",
                         lineHeight: 1.65,
-                        fontFamily: isNature ? "Lora, serif" : "Inter, sans-serif",
+                        fontFamily: isNature ? "Lora, serif" : "Space Grotesk, sans-serif",
                         fontStyle: isNature ? "italic" : "normal",
                       }}>
                         {m.description}

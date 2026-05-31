@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 type Theme = "nature" | "dark";
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState<Theme>("nature");
+  const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -30,9 +30,9 @@ export default function ThemeSwitcher() {
 
   if (!mounted) return null;
 
-  const themes: { key: Theme; emoji: string; label: string }[] = [
-    { key: "nature", emoji: "🌿", label: "Nature" },
-    { key: "dark",   emoji: "🌌", label: "Tech" },
+  const themes: { key: Theme; emoji: string; label: string; desc: string }[] = [
+    { key: "nature", emoji: "🌿", label: "Nature", desc: "Nature & Growth" },
+    { key: "dark",   emoji: "♟️", label: "Quantum", desc: "Quantum Rook" },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function ThemeSwitcher() {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        gap: 12,
+        gap: 10,
       }}
     >
       {/* Theme pill */}
@@ -57,14 +57,18 @@ export default function ThemeSwitcher() {
           display: "flex",
           alignItems: "center",
           gap: 4,
-          background: theme === "dark" ? "rgba(26,26,30,0.95)" : "rgba(255,255,255,0.95)",
-          border: theme === "dark" ? "1px solid rgba(0,229,255,0.15)" : "1px solid rgba(110,139,96,0.2)",
-          borderRadius: 99,
+          background: theme === "dark"
+            ? "rgba(10,15,35,0.96)"
+            : "rgba(255,255,255,0.96)",
+          border: theme === "dark"
+            ? "1px solid rgba(59,130,246,0.25)"
+            : "1px solid rgba(110,139,96,0.2)",
+          borderRadius: 12,
           padding: "5px",
           boxShadow: theme === "dark"
-            ? "0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(0,229,255,0.1)"
-            : "0 8px 32px rgba(46,58,47,0.12), 0 2px 8px rgba(110,139,96,0.08)",
-          backdropFilter: "blur(16px)",
+            ? "0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(59,130,246,0.1), 0 0 20px rgba(59,130,246,0.1)"
+            : "0 8px 32px rgba(46,58,47,0.12)",
+          backdropFilter: "blur(20px)",
         }}
       >
         {themes.map((t) => {
@@ -80,19 +84,21 @@ export default function ThemeSwitcher() {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
-                padding: "8px 16px",
-                borderRadius: 99,
+                padding: "8px 14px",
+                borderRadius: 8,
                 border: "none",
                 background: "transparent",
                 cursor: "pointer",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "0.82rem",
-                fontWeight: 600,
+                fontFamily: theme === "dark" ? "Space Grotesk, sans-serif" : "Inter, sans-serif",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                letterSpacing: theme === "dark" ? "0.05em" : "0",
                 color: isActive
                   ? "#fff"
-                  : theme === "dark" ? "#9EA4AB" : "#6D746A",
+                  : theme === "dark" ? "#94A3B8" : "#6D746A",
                 zIndex: 1,
                 transition: "color 0.2s ease",
+                textTransform: theme === "dark" ? "uppercase" : "none",
               }}
             >
               {isActive && (
@@ -101,23 +107,26 @@ export default function ThemeSwitcher() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    borderRadius: 99,
+                    borderRadius: 8,
                     background: t.key === "dark"
-                      ? "linear-gradient(135deg, #00E5FF, #8A2BE2)"
+                      ? "linear-gradient(135deg, #3B82F6, #8B5CF6)"
                       : "linear-gradient(135deg, #6E8B60, #A67C52)",
                     zIndex: -1,
+                    boxShadow: t.key === "dark"
+                      ? "0 0 20px rgba(59,130,246,0.5)"
+                      : "none",
                   }}
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
                 />
               )}
-              <span style={{ fontSize: "1rem" }}>{t.emoji}</span>
+              <span style={{ fontSize: "0.95rem" }}>{t.emoji}</span>
               <span>{t.label}</span>
             </motion.button>
           );
         })}
       </motion.div>
 
-      {/* Theme label tooltip */}
+      {/* Label */}
       <AnimatePresence mode="wait">
         <motion.div
           key={theme}
@@ -126,16 +135,19 @@ export default function ThemeSwitcher() {
           exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.2 }}
           style={{
-            fontSize: "0.68rem",
-            fontWeight: 600,
+            fontSize: "0.6rem",
+            fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            color: theme === "dark" ? "rgba(0,229,255,0.6)" : "rgba(110,139,96,0.7)",
+            letterSpacing: "0.12em",
+            color: theme === "dark"
+              ? "rgba(59,130,246,0.55)"
+              : "rgba(110,139,96,0.65)",
             textAlign: "right",
-            paddingRight: 4,
+            paddingRight: 2,
+            fontFamily: theme === "dark" ? "Orbitron, monospace" : "Inter, sans-serif",
           }}
         >
-          {theme === "dark" ? "Deep Abyssal Tech" : "Nature & Growth"}
+          {themes.find((t) => t.key === theme)?.desc}
         </motion.div>
       </AnimatePresence>
     </div>
