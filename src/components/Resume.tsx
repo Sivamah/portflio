@@ -161,7 +161,7 @@ export default function Resume() {
                   { icon: "☁️", label: "AWS Cloud Internship — App Innovation Technologies", color: "var(--c-orange)" },
                   { icon: "🚀", label: "Projects: Voice Chess Assistant, Skill Platform, Medicine Expiry System", color: "var(--c-accent)" },
                   { icon: "🏅", label: "Certifications: AWS, NPTEL Elite, C++ Certification", color: "var(--c-teal)" },
-                  { icon: "⚡", label: "Contact: Email, Phone, LinkedIn Profile Links", color: "var(--c-secondary)" },
+                  { icon: "📍", label: "Contact: Email, Phone, LinkedIn, GitHub Profile Links", color: "var(--c-secondary)" },
                 ].map((item) => (
                   <div key={item.label} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                     <span style={{ fontSize: "1.1rem", marginTop: 2 }}>{item.icon}</span>
