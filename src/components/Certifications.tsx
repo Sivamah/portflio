@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const certs = [
   {
@@ -10,11 +10,13 @@ const certs = [
     title: "AWS Cloud Practitioner",
     issuer: "Amazon Web Services",
     year: "2025",
-    icon: "☁️",
+    natureIcon: "🍀",
+    techIcon: "☁️",
+    natureBadge: "🌱 Cloud Growth Milestone",
+    techBadge: "🏆 AWS Certified",
     color: "var(--c-orange)",
-    bg: "var(--c-orange-soft)",
-    border: "rgba(255,140,66,0.2)",
-    badge: "🏆 AWS Certified",
+    border: "rgba(200,131,74,0.2)",
+    darkBorder: "rgba(255,140,66,0.2)",
     link: "https://aws.amazon.com/verification",
   },
   {
@@ -22,11 +24,13 @@ const certs = [
     title: "NPTEL Elite Certificate",
     issuer: "National Programme on Technology Enhanced Learning",
     year: "2024",
-    icon: "🎓",
+    natureIcon: "🌟",
+    techIcon: "🎓",
+    natureBadge: "🌿 Elite Bloom",
+    techBadge: "⭐ Elite Performer",
     color: "var(--c-primary)",
-    bg: "var(--c-primary-soft)",
-    border: "rgba(108,99,255,0.2)",
-    badge: "⭐ Elite Performer",
+    border: "rgba(110,139,96,0.2)",
+    darkBorder: "rgba(0,229,255,0.2)",
     link: "https://nptel.ac.in",
   },
   {
@@ -34,11 +38,13 @@ const certs = [
     title: "C++ Programming",
     issuer: "Coursera / NPTEL",
     year: "2023",
-    icon: "⚙️",
-    color: "var(--c-accent)",
-    bg: "var(--c-accent-soft)",
-    border: "rgba(0,212,255,0.2)",
-    badge: "✅ Certified",
+    natureIcon: "🌿",
+    techIcon: "⚙️",
+    natureBadge: "🌱 First Roots",
+    techBadge: "✅ Certified",
+    color: "var(--c-teal)",
+    border: "rgba(122,175,142,0.2)",
+    darkBorder: "rgba(0,191,165,0.2)",
     link: "https://coursera.org",
   },
 ];
@@ -46,14 +52,13 @@ const certs = [
 export default function Certifications() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [active, setActive] = useState(0);
-
-  const prev = () => setActive((a) => Math.max(0, a - 1));
-  const next = () => setActive((a) => Math.min(certs.length - 1, a + 1));
+  const theme = useTheme();
+  const isNature = theme === "nature";
 
   return (
     <section id="certifications" style={{ background: "var(--c-bg)" }}>
       <div ref={ref} className="section">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -62,177 +67,144 @@ export default function Certifications() {
           style={{ marginBottom: 48 }}
         >
           <div className="section-label">
-            <span>🏅</span>
-            Certifications
+            <span>{isNature ? "🏅" : "🏆"}</span>
+            {isNature ? "Growth Milestones" : "Certifications"}
           </div>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-            <h2 className="text-section-title font-display">
-              Achievements & <span className="gradient-text">Credentials</span>
-            </h2>
-            {/* Navigation arrows */}
-            <div style={{ display: "flex", gap: 8 }}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={prev}
-                disabled={active === 0}
-                id="cert-prev-btn"
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 12,
-                  border: "1.5px solid var(--c-border-soft)",
-                  background: "var(--c-surface)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: active === 0 ? "not-allowed" : "pointer",
-                  opacity: active === 0 ? 0.4 : 1,
-                  boxShadow: "var(--shadow-card)",
-                }}
-              >
-                <ChevronLeft size={18} style={{ color: "var(--c-text-2)" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={next}
-                disabled={active === certs.length - 1}
-                id="cert-next-btn"
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 12,
-                  border: "1.5px solid var(--c-border-soft)",
-                  background: "var(--c-surface)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: active === certs.length - 1 ? "not-allowed" : "pointer",
-                  opacity: active === certs.length - 1 ? 0.4 : 1,
-                  boxShadow: "var(--shadow-card)",
-                }}
-              >
-                <ChevronRight size={18} style={{ color: "var(--c-text-2)" }} />
-              </motion.button>
-            </div>
-          </div>
+          <h2 className="text-section-title font-display">
+            {isNature ? (
+              <>Growth <span className="gradient-text">Milestones</span></>
+            ) : (
+              <>Achievement <span className="gradient-text">Cards</span></>
+            )}
+          </h2>
+          <p style={{ color: "var(--c-text-2)", marginTop: 10, maxWidth: 440, fontFamily: isNature ? "Lora, serif" : "Inter, sans-serif", fontStyle: isNature ? "italic" : "normal" }}>
+            {isNature
+              ? "Each certificate marks a moment of growth — milestones along the journey of becoming."
+              : "Professional certifications and academic achievements."}
+          </p>
         </motion.div>
 
-        {/* Grid Layout */}
-        <div className="portfolio-grid-3">
-          {certs.map((cert, i) => (
+        {/* Cert Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="cert-grid-override">
+          {certs.map((c, i) => (
             <motion.div
-              key={cert.id}
+              key={c.id}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ delay: i * 0.12, duration: 0.5 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="cert-card"
-              style={{ position: "relative", overflow: "hidden" }}
+              style={{
+                background: "var(--c-surface)",
+                border: `1px solid ${isNature ? c.border : c.darkBorder}`,
+                borderRadius: isNature ? "20px" : "16px",
+                padding: "28px 24px",
+                boxShadow: "var(--shadow-card)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 14,
+                cursor: "default",
+                position: "relative",
+                overflow: "hidden",
+              }}
             >
-              {/* Top gradient bar */}
-              <div style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 4,
-                background: "var(--g-primary)",
-                borderRadius: "var(--radius) var(--radius) 0 0",
-              }} />
-
-              <div style={{ paddingTop: 12, display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between" }}>
-                <div>
-                  {/* Icon + badge */}
-                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 20 }}>
-                    <div style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: 16,
-                      background: cert.bg,
-                      border: `1px solid ${cert.border}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.75rem",
-                    }}>
-                      {cert.icon}
-                    </div>
-                    <div style={{
-                      background: cert.bg,
-                      border: `1px solid ${cert.border}`,
-                      borderRadius: 8,
-                      padding: "4px 10px",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      color: cert.color,
-                    }}>
-                      {cert.badge}
-                    </div>
-                  </div>
-
-                  <h3 style={{
-                    fontSize: "1rem",
-                    fontWeight: 700,
-                    color: "var(--c-text-1)",
-                    fontFamily: "Sora, sans-serif",
-                    marginBottom: 6,
-                    lineHeight: 1.35,
-                  }}>
-                    {cert.title}
-                  </h3>
-
-                  <p style={{ fontSize: "0.8rem", color: "var(--c-text-3)", marginBottom: 6, lineHeight: 1.4 }}>
-                    {cert.issuer}
-                  </p>
-
-                  <p style={{
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    color: cert.color,
-                    marginBottom: 20,
-                  }}>
-                    {cert.year}
-                  </p>
+              {/* Nature: subtle leaf accent */}
+              {isNature && (
+                <div style={{
+                  position: "absolute", top: -20, right: -20,
+                  fontSize: 80, opacity: 0.05, lineHeight: 1,
+                  transform: "rotate(15deg)",
+                  userSelect: "none",
+                }}>
+                  {c.natureIcon}
                 </div>
+              )}
 
+              {/* Icon */}
+              <div style={{
+                width: 52, height: 52,
+                borderRadius: isNature ? 14 : 12,
+                background: "var(--c-primary-soft)",
+                border: `1px solid ${isNature ? c.border : c.darkBorder}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "1.6rem",
+                flexShrink: 0,
+              }}>
+                {isNature ? c.natureIcon : c.techIcon}
+              </div>
+
+              {/* Badge */}
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "4px 12px",
+                borderRadius: 99,
+                background: "var(--c-primary-soft)",
+                color: "var(--c-primary)",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                width: "fit-content",
+                border: `1px solid ${isNature ? c.border : c.darkBorder}`,
+              }}>
+                {isNature ? c.natureBadge : c.techBadge}
+              </div>
+
+              <div>
+                <h3 style={{
+                  fontSize: "1.05rem",
+                  fontWeight: 700,
+                  color: "var(--c-text-1)",
+                  fontFamily: "Sora, sans-serif",
+                  marginBottom: 4,
+                  lineHeight: 1.3,
+                }}>
+                  {c.title}
+                </h3>
+                <p style={{ fontSize: "0.82rem", color: "var(--c-text-2)", fontFamily: isNature ? "Lora, serif" : "Inter, sans-serif" }}>
+                  {c.issuer}
+                </p>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 12, borderTop: "1px solid var(--c-border-soft)" }}>
+                <span style={{
+                  fontSize: "0.78rem",
+                  fontWeight: 700,
+                  color: c.color,
+                  padding: "3px 10px",
+                  background: "var(--c-primary-soft)",
+                  borderRadius: 99,
+                  border: `1px solid ${isNature ? c.border : c.darkBorder}`,
+                }}>
+                  {c.year}
+                </span>
                 <a
-                  href={cert.link}
-                  id={`cert-view-${cert.id}`}
+                  href={c.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-ghost"
-                  style={{ width: "100%", justifyContent: "center" }}
+                  style={{
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
+                    color: "var(--c-primary)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                    transition: "opacity 0.2s",
+                    opacity: 0.8,
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "0.8")}
                 >
-                  <ExternalLink size={13} />
-                  View Certificate
+                  {isNature ? "See Certificate →" : "Verify →"}
                 </a>
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* Dot indicators */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 32 }}>
-          {certs.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              style={{
-                width: i === active ? 24 : 8,
-                height: 8,
-                borderRadius: 99,
-                background: i === active ? "var(--c-primary)" : "var(--c-border-soft)",
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                padding: 0,
-              }}
-            />
-          ))}
-        </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @media (max-width: 900px) { .cert-grid-override { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 600px) { .cert-grid-override { grid-template-columns: 1fr !important; } }
+      `}} />
     </section>
   );
 }

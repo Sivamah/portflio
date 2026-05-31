@@ -3,30 +3,48 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { Mail, Menu, X, Home, User, Map, FolderOpen, Zap, Award, FileText, MessageSquare } from "lucide-react";
+import { Mail, Menu, X, Home, User, Map, FolderOpen, Zap, Award, FileText, MessageSquare, Leaf } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const navItems = [
-  { id: "home",          label: "Home",          icon: Home },
-  { id: "about",         label: "About",         icon: User },
-  { id: "journey",       label: "Journey",       icon: Map },
-  { id: "projects",      label: "Projects",      icon: FolderOpen },
-  { id: "skills",        label: "Skills",        icon: Zap },
-  { id: "certifications",label: "Certifications",icon: Award },
-  { id: "resume",        label: "Resume",        icon: FileText },
-  { id: "contact",       label: "Contact",       icon: MessageSquare },
+  { id: "home",           label: "Home",           icon: Home },
+  { id: "about",          label: "About",          icon: User },
+  { id: "journey",        label: "Journey",        icon: Map },
+  { id: "projects",       label: "Projects",       icon: FolderOpen },
+  { id: "skills",         label: "Skills",         icon: Zap },
+  { id: "certifications", label: "Certifications", icon: Award },
+  { id: "resume",         label: "Resume",         icon: FileText },
+  { id: "contact",        label: "Contact",        icon: MessageSquare },
 ];
 
 function SidebarContent({ active, onNav }: { active: string; onNav: (id: string) => void }) {
+  const theme = useTheme();
+  const isNature = theme === "nature";
+
   return (
     <>
       {/* Logo */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, padding: "0 4px" }}>
-        <div className="sidebar-logo">S</div>
+        <div className="sidebar-logo" style={{
+          background: isNature
+            ? "linear-gradient(135deg, #6E8B60, #A67C52)"
+            : "linear-gradient(135deg, #00E5FF, #8A2BE2)",
+        }}>
+          {isNature ? <Leaf size={16} color="white" /> : "S"}
+        </div>
         <div>
           <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--c-text-1)", fontFamily: "Sora, sans-serif", lineHeight: 1.2 }}>
             Siva M
           </p>
-          <p style={{ fontSize: "0.72rem", color: "var(--c-text-3)", marginTop: 1 }}>CSE Student</p>
+          <p style={{
+            fontSize: "0.7rem",
+            color: "var(--c-text-3)",
+            marginTop: 1,
+            fontFamily: isNature ? "Lora, serif" : "Inter, sans-serif",
+            fontStyle: isNature ? "italic" : "normal",
+          }}>
+            {isNature ? "Growing Engineer 🌱" : "CSE Student"}
+          </p>
         </div>
       </div>
 
@@ -38,28 +56,40 @@ function SidebarContent({ active, onNav }: { active: string; onNav: (id: string)
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
+          const label = isNature && item.id === "projects"
+            ? "Garden"
+            : isNature && item.id === "skills"
+            ? "Ecosystem"
+            : isNature && item.id === "certifications"
+            ? "Milestones"
+            : item.label;
           return (
-            <motion.button key={item.id} onClick={() => onNav(item.id)}
+            <motion.button
+              key={item.id}
+              onClick={() => onNav(item.id)}
               whileHover={{ x: 4 }}
               whileTap={{ scale: 0.95 }}
               className={`nav-item ${isActive ? "active-motion" : ""}`}
-              style={{ position: "relative", zIndex: 1, background: "transparent" }}>
+              style={{ position: "relative", zIndex: 1, background: "transparent" }}
+            >
               {isActive && (
                 <motion.div
                   layoutId="active-nav-bg"
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "var(--g-primary)",
-                    borderRadius: "10px",
-                    zIndex: -1
+                    background: isNature
+                      ? "linear-gradient(135deg, #6E8B60, #A67C52)"
+                      : "linear-gradient(135deg, #00E5FF, #8A2BE2)",
+                    borderRadius: isNature ? "12px" : "10px",
+                    zIndex: -1,
                   }}
                   transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                 />
               )}
               <Icon className="nav-icon" style={{ color: isActive ? "white" : "inherit" }} />
               <span style={{ color: isActive ? "white" : "inherit", fontWeight: isActive ? 600 : 500 }}>
-                {item.label}
+                {label}
               </span>
             </motion.button>
           );
@@ -115,7 +145,9 @@ export default function Sidebar() {
     <>
       {/* Mobile toggle */}
       <button className="mobile-menu-btn" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu" id="mobile-menu-btn">
-        {mobileOpen ? <X size={19} style={{ color: "var(--c-text-1)" }} /> : <Menu size={19} style={{ color: "var(--c-text-1)" }} />}
+        {mobileOpen
+          ? <X size={19} style={{ color: "var(--c-text-1)" }} />
+          : <Menu size={19} style={{ color: "var(--c-text-1)" }} />}
       </button>
 
       {/* Desktop Sidebar */}
@@ -127,9 +159,11 @@ export default function Sidebar() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.25)", backdropFilter: "blur(4px)", zIndex: 105 }}
-              onClick={() => setMobileOpen(false)} />
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)", backdropFilter: "blur(4px)", zIndex: 105 }}
+              onClick={() => setMobileOpen(false)}
+            />
             <motion.aside
               initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
               transition={{ type: "spring", damping: 28, stiffness: 320 }}

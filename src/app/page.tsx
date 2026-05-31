@@ -1,7 +1,7 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Journey from "@/components/Journey";
@@ -16,19 +16,14 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      {/* Theme toggle */}
-      <ThemeToggle />
+      {/* Floating theme switcher */}
+      <ThemeSwitcher />
 
       {/* Fixed sidebar */}
       <Sidebar />
 
-      {/* Main content shifted right on desktop */}
-      <div
-        style={{
-          marginLeft: "var(--sidebar-w)",
-        }}
-        className="main-wrapper"
-      >
+      {/* Main content */}
+      <div style={{ marginLeft: "var(--sidebar-w)" }} className="main-wrapper">
         <main>
           <Hero />
           <About />
@@ -45,9 +40,7 @@ export default function Home() {
 
       <style jsx global>{`
         @media (max-width: 1024px) {
-          .main-wrapper {
-            margin-left: 0 !important;
-          }
+          .main-wrapper { margin-left: 0 !important; }
         }
       `}</style>
     </>

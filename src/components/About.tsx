@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MapPin, GraduationCap, Star, Mail } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const interests = [
   { label: "Cloud Computing", icon: "☁️", color: "var(--c-orange)" },
@@ -14,6 +15,8 @@ const interests = [
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
+  const theme = useTheme();
+  const isNature = theme === "nature";
 
   return (
     <section id="about" style={{ background: "var(--c-surface-2)" }}>
@@ -25,12 +28,15 @@ export default function About() {
           style={{ marginBottom: 48 }}
         >
           <div className="section-label">
-            <span>👤</span>
+            <span>{isNature ? "🌱" : "👤"}</span>
             About Me
           </div>
           <h2 className="text-section-title font-display">
-            The Person{" "}
-            <span className="gradient-text">Behind the Code</span>
+            {isNature ? (
+              <>The <span className="gradient-text">Gardener</span> Behind the Code</>
+            ) : (
+              <>The Person <span className="gradient-text">Behind the Code</span></>
+            )}
           </h2>
         </motion.div>
 

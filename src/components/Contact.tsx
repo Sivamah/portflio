@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Phone, Send, CheckCircle } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { useTheme } from "@/hooks/useTheme";
 
 const contactInfo = [
   {
@@ -36,6 +37,8 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, amount: 0.2 });
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const theme = useTheme();
+  const isNature = theme === "nature";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
