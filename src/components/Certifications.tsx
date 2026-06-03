@@ -3,208 +3,187 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "@/hooks/useTheme";
+import { ExternalLink } from "lucide-react";
 
 const certs = [
   {
-    id: 1,
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    year: "2025",
-    natureIcon: "🍀",
-    techIcon: "☁️",
-    natureBadge: "🌱 Cloud Growth Milestone",
-    techBadge: "AWS CERTIFIED",
-    color: "#F59E0B",
-    glow: "rgba(245,158,11,0.3)",
-    border: "rgba(245,158,11,0.25)",
-    bgGrad: "linear-gradient(135deg, rgba(245,158,11,0.12), rgba(245,158,11,0.05))",
-    link: "https://aws.amazon.com/verification",
+    id:1, nomadIcon:"01", techIcon:"☁️",
+    title:"AWS Cloud Practitioner",
+    issuer:"Amazon Web Services",
+    year:"2025",
+    nomadBadge:"Cloud Certified",
+    techBadge:"AWS CERTIFIED",
+    color:"#163A63", qrColor:"#F59E0B",
+    link:"https://aws.amazon.com/verification",
+    discipline:"Cloud Computing",
   },
   {
-    id: 2,
-    title: "NPTEL Elite Certificate",
-    issuer: "National Programme on Technology Enhanced Learning",
-    year: "2024",
-    natureIcon: "🌟",
-    techIcon: "🎓",
-    natureBadge: "🌿 Elite Bloom",
-    techBadge: "ELITE PERFORMER",
-    color: "#3B82F6",
-    glow: "rgba(59,130,246,0.3)",
-    border: "rgba(59,130,246,0.25)",
-    bgGrad: "linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.05))",
-    link: "https://nptel.ac.in",
+    id:2, nomadIcon:"02", techIcon:"🎓",
+    title:"NPTEL Elite Certificate",
+    issuer:"National Programme on Technology Enhanced Learning",
+    year:"2024",
+    nomadBadge:"Elite Performer",
+    techBadge:"ELITE PERFORMER",
+    color:"#2F5D8A", qrColor:"#3B82F6",
+    link:"https://nptel.ac.in",
+    discipline:"Academic Excellence",
   },
   {
-    id: 3,
-    title: "C++ Programming",
-    issuer: "Coursera / NPTEL",
-    year: "2023",
-    natureIcon: "🌿",
-    techIcon: "⚙️",
-    natureBadge: "🌱 First Roots",
-    techBadge: "CERTIFIED",
-    color: "#8B5CF6",
-    glow: "rgba(139,92,246,0.3)",
-    border: "rgba(139,92,246,0.25)",
-    bgGrad: "linear-gradient(135deg, rgba(139,92,246,0.12), rgba(139,92,246,0.05))",
-    link: "https://coursera.org",
+    id:3, nomadIcon:"03", techIcon:"⚙️",
+    title:"C++ Programming",
+    issuer:"Coursera / NPTEL",
+    year:"2023",
+    nomadBadge:"Certified",
+    techBadge:"CERTIFIED",
+    color:"#4A7CA8", qrColor:"#8B5CF6",
+    link:"https://coursera.org",
+    discipline:"Programming",
   },
 ];
 
 export default function Certifications() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const inView = useInView(ref, { once:true, amount:0.2 });
   const theme = useTheme();
-  const isNature = theme === "nature";
+  const isNomad = theme === "nomad";
 
   return (
-    <section id="certifications" style={{ background: isNature ? "var(--c-bg)" : "#0A0F1E", position: "relative" }}>
-      {!isNature && (
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(59,130,246,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.02) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
-      )}
+    <section id="certifications" style={{ background: isNomad ? "var(--c-bg)" : "#0A0F1E", position:"relative" }}>
+      {!isNomad && <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(59,130,246,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.02) 1px, transparent 1px)", backgroundSize:"48px 48px", pointerEvents:"none" }} />}
 
-      <div ref={ref} className="section" style={{ position: "relative" }}>
+      <div ref={ref} className="section" style={{ position:"relative" }}>
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          style={{ marginBottom: 48 }}
-        >
+        <motion.div initial={{ opacity:0, y:28 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.55 }} style={{ marginBottom:48 }}>
           <div className="section-label">
-            <span>{isNature ? "🏅" : "🏆"}</span>
-            {isNature ? "Growth Milestones" : "ACHIEVEMENTS"}
+            <span>{isNomad?"◈":"🏆"}</span>
+            {isNomad ? "Credentials" : "ACHIEVEMENTS"}
           </div>
+          {isNomad && <div className="arch-divider" />}
           <h2 className="text-section-title font-display">
-            {isNature ? (
-              <>Growth <span className="gradient-text">Milestones</span></>
+            {isNomad ? (
+              <>Achievements &amp; <span className="gradient-text">Certifications</span></>
             ) : (
               <span className="gradient-text glow-text">ACHIEVEMENTS &amp; CERTIFICATIONS</span>
             )}
           </h2>
-          <p style={{ color: "var(--c-text-2)", marginTop: 10, maxWidth: 440, fontFamily: isNature ? "Lora, serif" : "Space Grotesk, sans-serif", fontStyle: isNature ? "italic" : "normal", fontSize: "0.86rem" }}>
-            {isNature
-              ? "Each certificate marks a moment of growth — milestones along the journey."
+          <p style={{ color:"var(--c-text-2)", marginTop:10, maxWidth:440, fontFamily:isNomad?"DM Sans, sans-serif":"Space Grotesk, sans-serif", fontSize:"0.87rem", lineHeight:1.75 }}>
+            {isNomad
+              ? "Formally recognised credentials in cloud computing, programming, and applied technology."
               : "MISSION CREDENTIALS // Verified achievements unlocked on the engineering path."}
           </p>
         </motion.div>
 
         {/* Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="cert-grid-override">
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24 }} className="cert-grid-override">
           {certs.map((c, i) => (
-            <motion.div
-              key={c.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.12, duration: 0.5 }}
-              whileHover={isNature
-                ? { y: -8, scale: 1.02 }
-                : { y: -6, borderColor: c.border, boxShadow: `0 0 30px ${c.glow}, 0 8px 32px rgba(0,0,0,0.5)` }
+            <motion.div key={c.id}
+              initial={{ opacity:0, y:28 }} animate={inView?{opacity:1,y:0}:{}}
+              transition={{ delay:i*0.12, duration:0.5 }}
+              whileHover={isNomad
+                ? { y:-6, boxShadow:"0 12px 36px rgba(22,58,99,0.1)" }
+                : { y:-5 }
               }
               style={{
-                background: isNature ? "var(--c-surface)" : "#0F172A",
-                border: `1px solid ${isNature ? "rgba(110,139,96,0.12)" : "rgba(255,255,255,0.07)"}`,
-                borderRadius: isNature ? "20px" : "12px",
-                padding: "26px 22px",
-                boxShadow: isNature ? "var(--shadow-card)" : "none",
-                display: "flex",
-                flexDirection: "column",
-                gap: 14,
-                cursor: "default",
-                position: "relative",
-                overflow: "hidden",
-                transition: "all 0.3s ease",
+                background: isNomad ? "var(--c-surface)" : "#0F172A",
+                border:`1px solid ${isNomad?"var(--c-border)":"rgba(255,255,255,0.07)"}`,
+                borderRadius: isNomad ? "16px" : "12px",
+                padding:"26px 22px",
+                boxShadow: isNomad ? "var(--shadow-card)" : "none",
+                display:"flex", flexDirection:"column", gap:14,
+                cursor:"default", position:"relative", overflow:"hidden",
+                transition:"all 0.28s ease",
+              }}
+              onMouseEnter={e => {
+                if (!isNomad) {
+                  e.currentTarget.style.borderColor = `${c.qrColor}35`;
+                  e.currentTarget.style.boxShadow = `0 0 24px ${c.qrColor}12, 0 8px 32px rgba(0,0,0,0.5)`;
+                }
+              }}
+              onMouseLeave={e => {
+                if (!isNomad) {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                  e.currentTarget.style.boxShadow = "none";
+                }
               }}
             >
-              {/* QR: holographic top accent */}
-              {!isNature && (
+              {/* Top accent */}
+              {isNomad && <div style={{ position:"absolute", top:0, left:0, right:0, height:"2px", background:`linear-gradient(90deg,${c.color},transparent)`, opacity:0.4 }} />}
+              {!isNomad && (
                 <>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${c.color}, transparent)`, boxShadow: `0 0 8px ${c.color}` }} />
-                  <div style={{ position: "absolute", inset: 0, background: c.bgGrad, pointerEvents: "none" }} />
-                  {/* Holographic shimmer */}
-                  <div style={{ position: "absolute", top: 0, left: "-100%", right: 0, bottom: 0, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent)", animation: "holographic-shine 4s ease-in-out infinite", pointerEvents: "none" }} />
+                  <div style={{ position:"absolute", top:0, left:0, right:0, height:"2px", background:`linear-gradient(90deg,${c.qrColor},transparent)`, boxShadow:`0 0 8px ${c.qrColor}` }} />
+                  <div style={{ position:"absolute", inset:0, background:`linear-gradient(135deg,${c.qrColor}10,transparent)`, pointerEvents:"none" }} />
                 </>
               )}
 
-              {/* Nature: leaf watermark */}
-              {isNature && (
-                <div style={{ position: "absolute", top: -20, right: -20, fontSize: 80, opacity: 0.05, lineHeight: 1, transform: "rotate(15deg)", userSelect: "none" }}>
-                  {c.natureIcon}
-                </div>
-              )}
-
-              {/* Icon */}
+              {/* Number / Icon */}
               <div style={{
-                width: 50, height: 50,
-                borderRadius: isNature ? 14 : 10,
-                background: isNature ? "var(--c-primary-soft)" : `rgba(${c.color === "#F59E0B" ? "245,158,11" : c.color === "#3B82F6" ? "59,130,246" : "139,92,246"},0.12)`,
-                border: `1px solid ${isNature ? "var(--c-border)" : c.border}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "1.5rem",
-                boxShadow: !isNature ? `0 0 16px ${c.glow}` : "none",
-                position: "relative",
-                zIndex: 1,
+                width:44, height:44, borderRadius: isNomad ? 6 : 10,
+                background: isNomad ? "var(--c-primary-soft)" : `${c.qrColor}14`,
+                border:`1px solid ${isNomad?"var(--c-border)":c.qrColor+"30"}`,
+                display:"flex", alignItems:"center", justifyContent:"center",
+                fontSize: isNomad ? "0.78rem" : "1.4rem",
+                fontWeight:700, color:isNomad?c.color:undefined,
+                fontFamily: isNomad ? "DM Sans, sans-serif" : "inherit",
+                flexShrink:0,
+                boxShadow: !isNomad ? `0 0 14px ${c.qrColor}22` : "none",
+                position:"relative", zIndex:1,
               }}>
-                {isNature ? c.natureIcon : c.techIcon}
+                {isNomad ? c.nomadIcon : c.techIcon}
               </div>
 
               {/* Badge */}
               <div style={{
-                display: "inline-flex", alignItems: "center",
-                padding: "4px 10px",
-                borderRadius: isNature ? 99 : 4,
-                background: isNature ? "var(--c-primary-soft)" : `rgba(${c.color === "#F59E0B" ? "245,158,11" : c.color === "#3B82F6" ? "59,130,246" : "139,92,246"},0.1)`,
-                color: c.color,
-                fontSize: isNature ? "0.72rem" : "0.62rem",
-                fontWeight: 700,
-                width: "fit-content",
-                border: `1px solid ${isNature ? "var(--c-border)" : c.border}`,
-                fontFamily: isNature ? "Inter" : "Orbitron, monospace",
-                letterSpacing: isNature ? "0" : "0.1em",
-                boxShadow: !isNature ? `0 0 10px ${c.glow}` : "none",
-                position: "relative",
-                zIndex: 1,
+                display:"inline-flex", alignItems:"center",
+                padding:"3px 10px",
+                borderRadius: isNomad ? 4 : 4,
+                background: isNomad ? "var(--c-primary-soft)" : `${c.qrColor}12`,
+                color: isNomad ? c.color : c.qrColor,
+                fontSize: isNomad ? "0.66rem" : "0.6rem",
+                fontWeight:700, width:"fit-content",
+                border:`1px solid ${isNomad?"var(--c-border)":c.qrColor+"28"}`,
+                fontFamily: isNomad ? "DM Sans, sans-serif" : "Orbitron, monospace",
+                letterSpacing: isNomad ? "0.06em" : "0.12em",
+                textTransform:"uppercase",
+                boxShadow: !isNomad ? `0 0 8px ${c.qrColor}18` : "none",
+                position:"relative", zIndex:1,
               }}>
-                {isNature ? c.natureBadge : c.techBadge}
+                {isNomad ? c.nomadBadge : c.techBadge}
               </div>
 
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <h3 style={{
-                  fontSize: isNature ? "1.05rem" : "0.88rem",
-                  fontWeight: 700,
-                  color: "var(--c-text-1)",
-                  fontFamily: isNature ? "Sora, sans-serif" : "Space Grotesk, sans-serif",
-                  letterSpacing: isNature ? "0" : "0.04em",
-                  marginBottom: 4,
-                  lineHeight: 1.3,
-                }}>
+              <div style={{ position:"relative", zIndex:1 }}>
+                {isNomad && (
+                  <p style={{ fontSize:"0.6rem", fontWeight:600, color:"var(--c-text-3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:5, fontFamily:"DM Sans, sans-serif" }}>
+                    {c.discipline}
+                  </p>
+                )}
+                <h3 style={{ fontSize:isNomad?"1rem":"0.88rem", fontWeight:700, color:"var(--c-text-1)",
+                  fontFamily:isNomad?"DM Sans, sans-serif":"Space Grotesk, sans-serif",
+                  letterSpacing:isNomad?"0":"0.04em", marginBottom:5, lineHeight:1.3 }}>
                   {c.title}
                 </h3>
-                <p style={{ fontSize: "0.76rem", color: "var(--c-text-2)", fontFamily: isNature ? "Lora, serif" : "Space Grotesk, sans-serif" }}>
+                <p style={{ fontSize:"0.78rem", color:"var(--c-text-2)", fontFamily:isNomad?"DM Sans, sans-serif":"Space Grotesk, sans-serif" }}>
                   {c.issuer}
                 </p>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 12, borderTop: `1px solid ${isNature ? "var(--c-border-soft)" : "rgba(255,255,255,0.05)"}`, position: "relative", zIndex: 1 }}>
-                <span style={{
-                  fontSize: "0.75rem", fontWeight: 800,
-                  color: c.color,
-                  padding: "3px 10px",
-                  background: isNature ? "var(--c-primary-soft)" : "rgba(255,255,255,0.04)",
-                  borderRadius: isNature ? 99 : 4,
-                  border: `1px solid ${isNature ? "var(--c-border)" : c.border}`,
-                  fontFamily: isNature ? "Inter" : "Orbitron, monospace",
-                  letterSpacing: isNature ? "0" : "0.1em",
-                }}>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:12, borderTop:`1px solid ${isNomad?"var(--c-border)":"rgba(255,255,255,0.05)"}`, position:"relative", zIndex:1 }}>
+                <span style={{ fontSize:"0.72rem", fontWeight:800, color: isNomad?c.color:c.qrColor,
+                  padding:"3px 9px", background: isNomad?"var(--c-primary-soft)":"rgba(255,255,255,0.04)",
+                  borderRadius: isNomad?4:4,
+                  border:`1px solid ${isNomad?"var(--c-border)":c.qrColor+"25"}`,
+                  fontFamily: isNomad?"DM Sans, sans-serif":"Orbitron, monospace",
+                  letterSpacing: isNomad?"0.02em":"0.1em" }}>
                   {c.year}
                 </span>
                 <a href={c.link} target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: "0.75rem", fontWeight: 700, color: c.color, display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.2s", opacity: 0.8, fontFamily: isNature ? "Inter" : "Space Grotesk, sans-serif", letterSpacing: "0.04em" }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = "0.8")}>
-                  {isNature ? "See Certificate →" : "VERIFY →"}
+                  style={{ fontSize:"0.75rem", fontWeight:700, color: isNomad?c.color:c.qrColor,
+                    display:"flex", alignItems:"center", gap:4, opacity:0.8, transition:"opacity 0.18s",
+                    fontFamily:isNomad?"DM Sans, sans-serif":"Space Grotesk, sans-serif", letterSpacing:"0.04em" }}
+                  onMouseEnter={e=>(e.currentTarget.style.opacity="1")}
+                  onMouseLeave={e=>(e.currentTarget.style.opacity="0.8")}>
+                  <ExternalLink size={11} />
+                  {isNomad ? "View" : "VERIFY"}
                 </a>
               </div>
             </motion.div>
@@ -212,13 +191,9 @@ export default function Certifications() {
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @media (max-width: 900px) { .cert-grid-override { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 600px) { .cert-grid-override { grid-template-columns: 1fr !important; } }
-        @keyframes holographic-shine {
-          0% { left: -100%; }
-          100% { left: 200%; }
-        }
+      <style dangerouslySetInnerHTML={{__html:`
+        @media (max-width:900px) { .cert-grid-override { grid-template-columns:repeat(2,1fr) !important; } }
+        @media (max-width:600px) { .cert-grid-override { grid-template-columns:1fr !important; } }
       `}} />
     </section>
   );

@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Theme = "nature" | "dark";
+type Theme = "nomad" | "dark";
 
 export default function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = (localStorage.getItem("portfolio-theme") as Theme) || "dark";
+    // migrate old "nature" key to "nomad"
+    const raw = localStorage.getItem("portfolio-theme");
+    const saved: Theme = raw === "nature" ? "nomad" : raw === "dark" ? "dark" : "dark";
     applyTheme(saved);
     setTheme(saved);
     setMounted(true);
@@ -18,8 +20,9 @@ export default function ThemeSwitcher() {
 
   function applyTheme(t: Theme) {
     const html = document.documentElement;
-    html.classList.remove("nature", "dark", "galactic");
+    html.classList.remove("nature", "dark", "nomad");
     if (t === "dark") html.classList.add("dark");
+    // nomad = no class (uses :root)
     localStorage.setItem("portfolio-theme", t);
   }
 
@@ -31,8 +34,8 @@ export default function ThemeSwitcher() {
   if (!mounted) return null;
 
   const themes: { key: Theme; emoji: string; label: string; desc: string }[] = [
-    { key: "nature", emoji: "🌿", label: "Nature", desc: "Nature & Growth" },
-    { key: "dark",   emoji: "♟️", label: "Quantum", desc: "Quantum Rook" },
+    { key: "nomad", emoji: "🏛️", label: "Nomad",   desc: "The Nomad's Board" },
+    { key: "dark",  emoji: "♟️", label: "Quantum", desc: "Quantum Rook" },
   ];
 
   return (
@@ -45,10 +48,9 @@ export default function ThemeSwitcher() {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        gap: 10,
+        gap: 8,
       }}
     >
-      {/* Theme pill */}
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -56,18 +58,18 @@ export default function ThemeSwitcher() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 4,
+          gap: 3,
           background: theme === "dark"
-            ? "rgba(10,15,35,0.96)"
-            : "rgba(255,255,255,0.96)",
+            ? "rgba(10,15,35,0.97)"
+            : "rgba(255,255,255,0.97)",
           border: theme === "dark"
-            ? "1px solid rgba(59,130,246,0.25)"
-            : "1px solid rgba(110,139,96,0.2)",
-          borderRadius: 12,
-          padding: "5px",
+            ? "1px solid rgba(59,130,246,0.2)"
+            : "1px solid #E5E7EB",
+          borderRadius: 10,
+          padding: "4px",
           boxShadow: theme === "dark"
-            ? "0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(59,130,246,0.1), 0 0 20px rgba(59,130,246,0.1)"
-            : "0 8px 32px rgba(46,58,47,0.12)",
+            ? "0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(59,130,246,0.08)"
+            : "0 4px 20px rgba(0,0,0,0.08)",
           backdropFilter: "blur(20px)",
         }}
       >
@@ -85,20 +87,21 @@ export default function ThemeSwitcher() {
                 alignItems: "center",
                 gap: 6,
                 padding: "8px 14px",
-                borderRadius: 8,
+                borderRadius: 7,
                 border: "none",
                 background: "transparent",
                 cursor: "pointer",
-                fontFamily: theme === "dark" ? "Space Grotesk, sans-serif" : "Inter, sans-serif",
+                fontFamily: theme === "dark" ? "Space Grotesk, sans-serif" : "DM Sans, sans-serif",
                 fontSize: "0.78rem",
                 fontWeight: 700,
-                letterSpacing: theme === "dark" ? "0.05em" : "0",
+                letterSpacing: theme === "dark" ? "0.05em" : "0.02em",
                 color: isActive
                   ? "#fff"
-                  : theme === "dark" ? "#94A3B8" : "#6D746A",
+                  : theme === "dark" ? "#94A3B8" : "#5B6472",
                 zIndex: 1,
                 transition: "color 0.2s ease",
                 textTransform: theme === "dark" ? "uppercase" : "none",
+                whiteSpace: "nowrap",
               }}
             >
               {isActive && (
@@ -107,44 +110,43 @@ export default function ThemeSwitcher() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    borderRadius: 8,
+                    borderRadius: 7,
                     background: t.key === "dark"
                       ? "linear-gradient(135deg, #3B82F6, #8B5CF6)"
-                      : "linear-gradient(135deg, #6E8B60, #A67C52)",
+                      : "linear-gradient(135deg, #163A63, #2F5D8A)",
                     zIndex: -1,
                     boxShadow: t.key === "dark"
-                      ? "0 0 20px rgba(59,130,246,0.5)"
-                      : "none",
+                      ? "0 0 16px rgba(59,130,246,0.4)"
+                      : "0 2px 8px rgba(22,58,99,0.25)",
                   }}
                   transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
                 />
               )}
-              <span style={{ fontSize: "0.95rem" }}>{t.emoji}</span>
+              <span style={{ fontSize: "0.9rem", lineHeight: 1 }}>{t.emoji}</span>
               <span>{t.label}</span>
             </motion.button>
           );
         })}
       </motion.div>
 
-      {/* Label */}
       <AnimatePresence mode="wait">
         <motion.div
           key={theme}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.18 }}
           style={{
-            fontSize: "0.6rem",
+            fontSize: "0.58rem",
             fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.14em",
             color: theme === "dark"
-              ? "rgba(59,130,246,0.55)"
-              : "rgba(110,139,96,0.65)",
+              ? "rgba(59,130,246,0.5)"
+              : "rgba(22,58,99,0.45)",
             textAlign: "right",
             paddingRight: 2,
-            fontFamily: theme === "dark" ? "Orbitron, monospace" : "Inter, sans-serif",
+            fontFamily: theme === "dark" ? "Orbitron, monospace" : "DM Sans, sans-serif",
           }}
         >
           {themes.find((t) => t.key === theme)?.desc}

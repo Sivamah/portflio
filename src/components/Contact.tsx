@@ -38,7 +38,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const theme = useTheme();
-  const isNature = theme === "nature";
+  const isNomad = theme === "nomad";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

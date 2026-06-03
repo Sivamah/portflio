@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Siva Subramanian M — Quantum Rook | Software Engineer Portfolio",
+  title: "Siva Subramanian M — Software Engineer Portfolio",
   description:
-    "Final-year Computer Science Engineering student. Building scalable software solutions using Java, AWS, Cloud Technologies, and Backend Development. Where Strategy Meets Technology.",
+    "Final-year Computer Science Engineering student. Building scalable software solutions using Java, AWS, Cloud Technologies, and Backend Development.",
   keywords: [
     "Siva Subramanian M",
     "Computer Science",
@@ -14,13 +14,12 @@ export const metadata: Metadata = {
     "Cloud Engineering",
     "Backend Development",
     "Portfolio",
-    "Quantum Rook",
   ],
   authors: [{ name: "Siva Subramanian M", url: "mailto:sivamah25@gmail.com" }],
   openGraph: {
-    title: "Siva Subramanian M — Quantum Rook Portfolio",
+    title: "Siva Subramanian M — Software Engineer Portfolio",
     description:
-      "Where Strategy Meets Technology. Building scalable software solutions using Java, AWS, Cloud Technologies, and Backend Development.",
+      "Building scalable software solutions using Java, AWS, Cloud Technologies, and Backend Development.",
     type: "website",
   },
 };
@@ -36,7 +35,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>

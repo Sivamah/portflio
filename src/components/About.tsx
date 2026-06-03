@@ -16,7 +16,7 @@ export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
   const theme = useTheme();
-  const isNature = theme === "nature";
+  const isNomad = theme === "nomad";
 
   return (
     <section id="about" style={{ background: "var(--c-surface-2)" }}>
@@ -28,14 +28,15 @@ export default function About() {
           style={{ marginBottom: 48 }}
         >
           <div className="section-label">
-            <span>{isNature ? "🌱" : "👤"}</span>
-            About Me
+            <span>◉</span>
+            {isNomad ? "About" : "ABOUT"}
           </div>
+          {isNomad && <div className="arch-divider" />}
           <h2 className="text-section-title font-display">
-            {isNature ? (
-              <>The <span className="gradient-text">Gardener</span> Behind the Code</>
-            ) : (
+            {isNomad ? (
               <>The Person <span className="gradient-text">Behind the Code</span></>
+            ) : (
+              <span className="gradient-text glow-text">ABOUT // OPERATOR</span>
             )}
           </h2>
         </motion.div>
